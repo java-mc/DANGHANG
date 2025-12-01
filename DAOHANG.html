@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的导航网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+        
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
+        }
+        
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #2980b9;
+        }
+        
+        .category {
+            margin-bottom: 30px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+            color: #2c3e50;
+        }
+        
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .site-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .site-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .site-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .site-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .site-desc {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .site-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>我的导航网站</h1>
+            <p class="subtitle">快速访问您喜爱的网站</p>
+        </header>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="搜索网站或输入网址...">
+            <button id="search-btn">搜索</button>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">常用网站</h2>
+            <div class="sites-grid">
+                <div class="site-card" data-url="https://www.google.com">
+                    <span class="site-icon">🔍</span>
+                    <div class="site-name">Google</div>
+                    <div class="site-desc">搜索引擎</div>
+                </div>
+                <div class="site-card" data-url="https://github.com">
+                    <span class="site-icon">💻</span>
+                    <div class="site-name">GitHub</div>
+                    <div class="site-desc">代码托管平台</div>
+                </div>
+                <div class="site-card" data-url="https://www.youtube.com">
+                    <span class="site-icon">📺</span>
+                    <div class="site-name">YouTube</div>
+                    <div class="site-desc">视频分享平台</div>
+                </div>
+                <div class="site-card" data-url="https://twitter.com">
+                    <span class="site-icon">🐦</span>
+                    <div class="site-name">Twitter</div>
+                    <div class="site-desc">社交媒体</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">学习资源</h2>
+            <div class="sites-grid">
+                <div class="site-card" data-url="https://stackoverflow.com">
+                    <span class="site-icon">❓</span>
+                    <div class="site-name">Stack Overflow</div>
+                    <div class="site-desc">编程问答社区</div>
+                </div>
+                <div class="site-card" data-url="https://developer.mozilla.org">
+                    <span class="site-icon">🌐</span>
+                    <div class="site-name">MDN Web Docs</div>
+                    <div class="site-desc">Web开发文档</div>
+                </div>
+                <div class="site-card" data-url="https://www.freecodecamp.org">
+                    <span class="site-icon">🆓</span>
+                    <div class="site-name">freeCodeCamp</div>
+                    <div class="site-desc">免费编程学习</div>
+                </div>
+                <div class="site-card" data-url="https://www.coursera.org">
+                    <span class="site-icon">🎓</span>
+                    <div class="site-name">Coursera</div>
+                    <div class="site-desc">在线课程平台</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category">
+            <h2 class="category-title">工具与效率</h2>
+            <div class="sites-grid">
+                <div class="site-card" data-url="https://trello.com">
+                    <span class="site-icon">📋</span>
+                    <div class="site-name">Trello</div>
+                    <div class="site-desc">项目管理工具</div>
+                </div>
+                <div class="site-card" data-url="https://www.notion.so">
+                    <span class="site-icon">📝</span>
+                    <div class="site-name">Notion</div>
+                    <div class="site-desc">笔记与协作工具</div>
+                </div>
+                <div class="site-card" data-url="https://drive.google.com">
+                    <span class="site-icon">☁️</span>
+                    <div class="site-name">Google Drive</div>
+                    <div class="site-desc">云存储服务</div>
+                </div>
+                <div class="site-card" data-url="https://calendar.google.com">
+                    <span class="site-icon">📅</span>
+                    <div class="site-name">Google Calendar</div>
+                    <div class="site-desc">日历应用</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 我的导航网站 | 设计简洁，使用便捷</p>
+        </footer>
+    </div>
+
+    <script>
+        // 搜索功能
+        document.getElementById('search-btn').addEventListener('click', function() {
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput.value.trim();
+            
+            if (query) {
+                // 检查是否是URL格式
+                if (query.includes('.') || query.startsWith('http')) {
+                    // 如果不是以http开头，添加https
+                    const url = query.startsWith('http') ? query : 'https://' + query;
+                    window.open(url, '_blank');
+                } else {
+                    // 否则使用Google搜索
+                    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+                }
+                
+                searchInput.value = '';
+            }
+        });
+        
+        // 回车键搜索
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('search-btn').click();
+            }
+        });
+        
+        // 网站卡片点击事件
+        document.querySelectorAll('.site-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                window.open(url, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

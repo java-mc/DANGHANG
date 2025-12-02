@@ -3,156 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的导航网站</title>
+    <title>游戏导航网站增强版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #a5b4fc;
+            --secondary: #3a0ca3;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.1);
+            --game-color: #f72585;
+            --wiki-color: #3f37c9;
+            --tool-color: #4cc9f0;
+            --domestic-color: #f8961e;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: var(--dark);
             min-height: 100vh;
-            padding: 20px;
-            color: #333;
+            padding: 2rem 1rem;
+            line-height: 1.6;
         }
-        
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
-        
+
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 0;
+            margin-bottom: 3rem;
         }
-        
+
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
-        
+
         .subtitle {
+            color: var(--gray);
             font-size: 1.1rem;
-            color: #7f8c8d;
-        }
-        
-        .search-box {
+            font-weight: 400;
             max-width: 600px;
-            margin: 0 auto 40px;
+            margin: 0 auto;
+        }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 3rem;
             position: relative;
         }
-        
-        .search-box input {
+
+        .search-box {
             width: 100%;
-            padding: 15px 20px;
+            padding: 1.1rem 1.75rem;
             border: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            border-radius: 2.5rem;
+            font-size: 1.05rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        
-        .search-box input:focus {
+
+        .search-box:focus {
             outline: none;
-            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            border-color: var(--primary);
         }
-        
-        .search-box button {
+
+        .search-btn {
             position: absolute;
-            right: 5px;
-            top: 5px;
-            background: #3498db;
-            color: white;
+            right: 0.5rem;
+            top: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 0.85rem 1.75rem;
+            border-radius: 2rem;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        
-        .search-box button:hover {
-            background: #2980b9;
+
+        .search-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
-        
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            padding: 0 1rem;
+        }
+
+        .tab {
+            padding: 0.85rem 1.75rem;
+            background: var(--white);
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--gray);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .tab:hover:not(.active) {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .tab[data-category="games"],
+        .tab[data-category="game-wiki"] {
+            border-left: 3px solid var(--game-color);
+        }
+
+        .tab[data-category="wikipedia"] {
+            border-left: 3px solid var(--wiki-color);
+        }
+
+        .tab[data-category="tools"] {
+            border-left: 3px solid var(--tool-color);
+        }
+
+        .tab[data-category="domestic"] {
+            border-left: 3px solid var(--domestic-color);
+        }
+
         .category {
-            margin-bottom: 30px;
+            margin-bottom: 3rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
-        
-        .category-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eaeaea;
-            color: #2c3e50;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        .sites-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .site-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        
-        .site-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .site-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+
+        .category.active {
             display: block;
         }
-        
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.75rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-left: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.75rem;
+            padding: 0 1rem;
+        }
+
+        .site-card {
+            background: var(--card-bg);
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .site-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .site-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(67, 97, 238, 0.2);
+        }
+
+        .site-card:hover::before {
+            width: 6px;
+            background: var(--secondary);
+        }
+
+        .site-icon {
+            font-size: 1.85rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            margin: 0 auto 1.25rem;
+            transition: all 0.3s;
+        }
+
+        .site-card:hover .site-icon {
+            transform: scale(1.1);
+            background: rgba(67, 97, 238, 0.2);
+        }
+
         .site-name {
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-size: 1.1rem;
         }
-        
+
         .site-desc {
-            font-size: 0.85rem;
-            color: #7f8c8d;
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
         }
-        
+
+        /* 特殊卡片样式 */
+        .game-card::before {
+            background: var(--game-color);
+        }
+
+        .game-card:hover::before {
+            background: #d1166b;
+        }
+
+        .game-card .site-icon {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--game-color);
+        }
+
+        .game-card:hover .site-icon {
+            background: rgba(247, 37, 133, 0.2);
+        }
+
+        .wiki-card::before {
+            background: var(--wiki-color);
+        }
+
+        .wiki-card:hover::before {
+            background: #2a2593;
+        }
+
+        .wiki-card .site-icon {
+            background: rgba(63, 55, 201, 0.1);
+            color: var(--wiki-color);
+        }
+
+        .wiki-card:hover .site-icon {
+            background: rgba(63, 55, 201, 0.2);
+        }
+
+        .tool-card::before {
+            background: var(--tool-color);
+        }
+
+        .tool-card:hover::before {
+            background: #2aa8d0;
+        }
+
+        .tool-card .site-icon {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--tool-color);
+        }
+
+        .tool-card:hover .site-icon {
+            background: rgba(76, 201, 240, 0.2);
+        }
+
+        .domestic-card::before {
+            background: var(--domestic-color);
+        }
+
+        .domestic-card:hover::before {
+            background: #e07e0e;
+        }
+
+        .domestic-card .site-icon {
+            background: rgba(248, 150, 30, 0.1);
+            color: var(--domestic-color);
+        }
+
+        .domestic-card:hover .site-icon {
+            background: rgba(248, 150, 30, 0.2);
+        }
+
+        /* 新增功能按钮 */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-link {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-link:hover {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* 暗黑模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #7f8c8d;
+            margin-top: 4rem;
+            padding: 2rem;
+            color: var(--gray);
             font-size: 0.9rem;
         }
-        
+
+        /* 暗黑模式样式 */
+        body.dark-mode {
+            --primary: #4cc9f0;
+            --secondary: #4361ee;
+            --light: #121212;
+            --dark: #f8f9fa;
+            --gray: #adb5bd;
+            --white: #1e1e1e;
+            --card-bg: rgba(30, 30, 30, 0.9);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+        }
+
+        .dark-mode .site-card {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode .search-box,
+        .dark-mode .tab,
+        .dark-mode .quick-link {
+            background: #2d2d2d;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--dark);
+        }
+
         @media (max-width: 768px) {
-            .sites-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            
             h1 {
                 font-size: 2rem;
             }
-        }
-        
-        @media (max-width: 480px) {
+            
             .sites-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.5rem;
             }
             
             .site-card {
-                padding: 15px;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .sites-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .tab, .quick-link {
+                padding: 0.7rem 1.3rem;
+                font-size: 0.85rem;
+            }
+            
+            .search-box {
+                padding: 1rem 1.5rem;
+            }
+            
+            .search-btn {
+                padding: 0.7rem 1.5rem;
+            }
+
+            .theme-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 1.5rem;
+                right: 1.5rem;
             }
         }
     </style>
@@ -160,96 +469,345 @@
 <body>
     <div class="container">
         <header>
-            <h1>我的导航网站</h1>
-            <p class="subtitle">快速访问您喜爱的网站</p>
+            <h1><i class="fas fa-gamepad"></i> 游戏导航网站增强版</h1>
+            <p class="subtitle">一站式游戏资源导航，探索无限游戏世界</p>
         </header>
         
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="搜索网站或输入网址...">
-            <button id="search-btn">搜索</button>
+        <div class="quick-links">
+            <div class="quick-link" onclick="window.open('https://store.steampowered.com', '_blank')">
+                <i class="fab fa-steam"></i> Steam特惠
+            </div>
+            <div class="quick-link" onclick="window.open('https://www.epicgames.com/store', '_blank')">
+                <i class="fas fa-gamepad"></i> Epic免费游戏
+            </div>
+            <div class="quick-link" onclick="window.open('https://www.nintendo.com', '_blank')">
+                <i class="fas fa-gamepad"></i> Switch游戏
+            </div>
+            <div class="quick-link" onclick="window.open('https://www.bilibili.com/v/game', '_blank')">
+                <i class="fas fa-play-circle"></i> 哔哩游戏
+            </div>
         </div>
         
-        <div class="category">
-            <h2 class="category-title">常用网站</h2>
+        <div class="search-container">
+            <input type="text" class="search-box" id="search-input" placeholder="搜索游戏、攻略或输入网址...">
+            <button class="search-btn" id="search-btn"><i class="fas fa-search"></i> 搜索</button>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" data-category="wikipedia">维基百科</div>
+            <div class="tab" data-category="games">游戏平台</div>
+            <div class="tab" data-category="game-wiki">游戏维基</div>
+            <div class="tab" data-category="domestic">国内资源</div>
+            <div class="tab" data-category="tools">实用工具</div>
+        </div>
+        
+        <div class="category active" id="wikipedia-category">
+            <h2 class="category-title"><i class="fab fa-wikipedia-w"></i> 维基百科</h2>
             <div class="sites-grid">
-                <div class="site-card" data-url="https://www.google.com">
-                    <span class="site-icon">🔍</span>
-                    <div class="site-name">Google</div>
-                    <div class="site-desc">搜索引擎</div>
+                <div class="site-card wiki-card" data-url="https://zh.wikipedia.org">
+                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
+                    <div class="site-name">中文维基</div>
+                    <div class="site-desc">自由的百科全书</div>
                 </div>
-                <div class="site-card" data-url="https://github.com">
-                    <span class="site-icon">💻</span>
-                    <div class="site-name">GitHub</div>
-                    <div class="site-desc">代码托管平台</div>
+                <div class="site-card wiki-card" data-url="https://en.wikipedia.org">
+                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
+                    <div class="site-name">英文维基</div>
+                    <div class="site-desc">The Free Encyclopedia</div>
                 </div>
-                <div class="site-card" data-url="https://www.youtube.com">
-                    <span class="site-icon">📺</span>
-                    <div class="site-name">YouTube</div>
+                <div class="site-card wiki-card" data-url="https://zh.m.wikipedia.org">
+                    <div class="site-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="site-name">移动版</div>
+                    <div class="site-desc">手机优化版本</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wiktionary.org">
+                    <div class="site-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="site-name">维基词典</div>
+                    <div class="site-desc">多语言词典</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikibooks.org">
+                    <div class="site-icon"><i class="fas fa-book"></i></div>
+                    <div class="site-name">维基教科书</div>
+                    <div class="site-desc">自由教学读本</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikinews.org">
+                    <div class="site-icon"><i class="fas fa-newspaper"></i></div>
+                    <div class="site-name">维基新闻</div>
+                    <div class="site-desc">自由内容新闻</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikisource.org">
+                    <div class="site-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="site-name">维基文库</div>
+                    <div class="site-desc">自由图书馆</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikiversity.org">
+                    <div class="site-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="site-name">维基学院</div>
+                    <div class="site-desc">自由学习资源</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikivoyage.org">
+                    <div class="site-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <div class="site-name">维基导游</div>
+                    <div class="site-desc">自由旅行指南</div>
+                </div>
+                <div class="site-card wiki-card" data-url="https://zh.wikiquote.org">
+                    <div class="site-icon"><i class="fas fa-quote-right"></i></div>
+                    <div class="site-name">维基语录</div>
+                    <div class="site-desc">名人名言集</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category" id="games-category">
+            <h2 class="category-title"><i class="fas fa-gamepad"></i> 游戏平台</h2>
+            <div class="sites-grid">
+                <div class="site-card game-card" data-url="https://store.steampowered.com">
+                    <div class="site-icon"><i class="fab fa-steam"></i></div>
+                    <div class="site-name">Steam</div>
+                    <div class="site-desc">数字游戏发行平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.epicgames.com/store">
+                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="site-name">Epic Games</div>
+                    <div class="site-desc">游戏商店与引擎</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.origin.com">
+                    <div class="site-icon"><i class="fas fa-dice"></i></div>
+                    <div class="site-name">Origin</div>
+                    <div class="site-desc">EA游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.gog.com">
+                    <div class="site-icon"><i class="fas fa-ghost"></i></div>
+                    <div class="site-name">GOG</div>
+                    <div class="site-desc">无DRM游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.xbox.com">
+                    <div class="site-icon"><i class="fab fa-xbox"></i></div>
+                    <div class="site-name">Xbox</div>
+                    <div class="site-desc">微软游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.playstation.com">
+                    <div class="site-icon"><i class="fab fa-playstation"></i></div>
+                    <div class="site-name">PlayStation</div>
+                    <div class="site-desc">索尼游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.nintendo.com">
+                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="site-name">Nintendo</div>
+                    <div class="site-desc">任天堂游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.blizzard.com">
+                    <div class="site-icon"><i class="fab fa-battle-net"></i></div>
+                    <div class="site-name">Battle.net</div>
+                    <div class="site-desc">暴雪游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.ubisoft.com">
+                    <div class="site-icon"><i class="fas fa-crown"></i></div>
+                    <div class="site-name">Ubisoft</div>
+                    <div class="site-desc">育碧游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.rockstargames.com">
+                    <div class="site-icon"><i class="fas fa-star"></i></div>
+                    <div class="site-name">Rockstar</div>
+                    <div class="site-desc">R星游戏平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.twitch.tv">
+                    <div class="site-icon"><i class="fab fa-twitch"></i></div>
+                    <div class="site-name">Twitch</div>
+                    <div class="site-desc">游戏直播平台</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.discord.com">
+                    <div class="site-icon"><i class="fab fa-discord"></i></div>
+                    <div class="site-name">Discord</div>
+                    <div class="site-desc">游戏社区平台</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category" id="game-wiki-category">
+            <h2 class="category-title"><i class="fas fa-dragon"></i> 游戏维基</h2>
+            <div class="sites-grid">
+                <div class="site-card game-card" data-url="https://www.wowhead.com">
+                    <div class="site-icon"><i class="fas fa-dragon"></i></div>
+                    <div class="site-name">Wowhead</div>
+                    <div class="site-desc">魔兽世界数据库</div>
+                </div>
+                <div class="site-card game-card" data-url="https://leagueoflegends.fandom.com">
+                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
+                    <div class="site-name">LOL Wiki</div>
+                    <div class="site-desc">英雄联盟维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://minecraft.fandom.com">
+                    <div class="site-icon"><i class="fas fa-cube"></i></div>
+                    <div class="site-name">Minecraft Wiki</div>
+                    <div class="site-desc">我的世界维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://genshin-impact.fandom.com">
+                    <div class="site-icon"><i class="fas fa-wind"></i></div>
+                    <div class="site-name">原神Wiki</div>
+                    <div class="site-desc">Genshin Impact</div>
+                </div>
+                <div class="site-card game-card" data-url="https://eldenring.wiki.fextralife.com">
+                    <div class="site-icon"><i class="fas fa-skull"></i></div>
+                    <div class="site-name">Elden Ring Wiki</div>
+                    <div class="site-desc">艾尔登法环维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.pokewiki.de">
+                    <div class="site-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="site-name">PokéWiki</div>
+                    <div class="site-desc">宝可梦维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://zelda.fandom.com">
+                    <div class="site-icon"><i class="fas fa-sword"></i></div>
+                    <div class="site-name">Zelda Wiki</div>
+                    <div class="site-desc">塞尔达传说维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.falloutwiki.com">
+                    <div class="site-icon"><i class="fas fa-radiation"></i></div>
+                    <div class="site-name">Fallout Wiki</div>
+                    <div class="site-desc">辐射维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://dota2.fandom.com">
+                    <div class="site-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="site-name">Dota 2 Wiki</div>
+                    <div class="site-desc">Dota 2维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://terraria.fandom.com">
+                    <div class="site-icon"><i class="fas fa-mountain"></i></div>
+                    <div class="site-name">Terraria Wiki</div>
+                    <div class="site-desc">泰拉瑞亚维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://stardewvalleywiki.com">
+                    <div class="site-icon"><i class="fas fa-leaf"></i></div>
+                    <div class="site-name">Stardew Wiki</div>
+                    <div class="site-desc">星露谷物语维基</div>
+                </div>
+                <div class="site-card game-card" data-url="https://www.wowpedia.org">
+                    <div class="site-icon"><i class="fas fa-book"></i></div>
+                    <div class="site-name">Wowpedia</div>
+                    <div class="site-desc">魔兽世界维基</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="category" id="domestic-category">
+            <h2 class="category-title"><i class="fas fa-home"></i> 国内资源</h2>
+            <div class="sites-grid">
+                <div class="site-card domestic-card" data-url="https://www.baidu.com">
+                    <div class="site-icon"><i class="fas fa-search"></i></div>
+                    <div class="site-name">百度</div>
+                    <div class="site-desc">中文搜索引擎</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.zhihu.com">
+                    <div class="site-icon"><i class="fas fa-question"></i></div>
+                    <div class="site-name">知乎</div>
+                    <div class="site-desc">问答社区</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.bilibili.com">
+                    <div class="site-icon"><i class="fas fa-play-circle"></i></div>
+                    <div class="site-name">哔哩哔哩</div>
                     <div class="site-desc">视频分享平台</div>
                 </div>
-                <div class="site-card" data-url="https://twitter.com">
-                    <span class="site-icon">🐦</span>
-                    <div class="site-name">Twitter</div>
+                <div class="site-card domestic-card" data-url="https://www.weibo.com">
+                    <div class="site-icon"><i class="fab fa-weibo"></i></div>
+                    <div class="site-name">微博</div>
                     <div class="site-desc">社交媒体</div>
                 </div>
+                <div class="site-card domestic-card" data-url="https://www.3dmgame.com">
+                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="site-name">3DM游戏网</div>
+                    <div class="site-desc">游戏资讯门户</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.gamersky.com">
+                    <div class="site-icon"><i class="fas fa-headset"></i></div>
+                    <div class="site-name">游民星空</div>
+                    <div class="site-desc">游戏资讯网站</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.17173.com">
+                    <div class="site-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="site-name">17173游戏网</div>
+                    <div class="site-desc">游戏资讯门户</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.ali213.net">
+                    <div class="site-icon"><i class="fas fa-dragon"></i></div>
+                    <div class="site-name">游侠网</div>
+                    <div class="site-desc">游戏资讯门户</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.taptap.com">
+                    <div class="site-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="site-name">TapTap</div>
+                    <div class="site-desc">手游社区</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.nga.cn">
+                    <div class="site-icon"><i class="fas fa-comments"></i></div>
+                    <div class="site-name">NGA玩家社区</div>
+                    <div class="site-desc">游戏论坛</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.vgtime.com">
+                    <div class="site-icon"><i class="fas fa-clock"></i></div>
+                    <div class="site-name">游戏时光</div>
+                    <div class="site-desc">游戏资讯网站</div>
+                </div>
+                <div class="site-card domestic-card" data-url="https://www.a9vg.com">
+                    <div class="site-icon"><i class="fas fa-tv"></i></div>
+                    <div class="site-name">A9VG电玩部落</div>
+                    <div class="site-desc">主机游戏社区</div>
+                </div>
             </div>
         </div>
         
-        <div class="category">
-            <h2 class="category-title">学习资源</h2>
+        <div class="category" id="tools-category">
+            <h2 class="category-title"><i class="fas fa-tools"></i> 实用工具</h2>
             <div class="sites-grid">
-                <div class="site-card" data-url="https://stackoverflow.com">
-                    <span class="site-icon">❓</span>
-                    <div class="site-name">Stack Overflow</div>
-                    <div class="site-desc">编程问答社区</div>
+                <div class="site-card tool-card" data-url="https://translate.google.com">
+                    <div class="site-icon"><i class="fas fa-language"></i></div>
+                    <div class="site-name">Google翻译</div>
+                    <div class="site-desc">在线翻译工具</div>
                 </div>
-                <div class="site-card" data-url="https://developer.mozilla.org">
-                    <span class="site-icon">🌐</span>
-                    <div class="site-name">MDN Web Docs</div>
-                    <div class="site-desc">Web开发文档</div>
-                </div>
-                <div class="site-card" data-url="https://www.freecodecamp.org">
-                    <span class="site-icon">🆓</span>
-                    <div class="site-name">freeCodeCamp</div>
-                    <div class="site-desc">免费编程学习</div>
-                </div>
-                <div class="site-card" data-url="https://www.coursera.org">
-                    <span class="site-icon">🎓</span>
-                    <div class="site-name">Coursera</div>
-                    <div class="site-desc">在线课程平台</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="category">
-            <h2 class="category-title">工具与效率</h2>
-            <div class="sites-grid">
-                <div class="site-card" data-url="https://trello.com">
-                    <span class="site-icon">📋</span>
-                    <div class="site-name">Trello</div>
-                    <div class="site-desc">项目管理工具</div>
-                </div>
-                <div class="site-card" data-url="https://www.notion.so">
-                    <span class="site-icon">📝</span>
+                <div class="site-card tool-card" data-url="https://www.notion.so">
+                    <div class="site-icon"><i class="fas fa-sticky-note"></i></div>
                     <div class="site-name">Notion</div>
                     <div class="site-desc">笔记与协作工具</div>
                 </div>
-                <div class="site-card" data-url="https://drive.google.com">
-                    <span class="site-icon">☁️</span>
-                    <div class="site-name">Google Drive</div>
-                    <div class="site-desc">云存储服务</div>
+                <div class="site-card tool-card" data-url="https://www.figma.com">
+                    <div class="site-icon"><i class="fab fa-figma"></i></div>
+                    <div class="site-name">Figma</div>
+                    <div class="site-desc">设计协作工具</div>
                 </div>
-                <div class="site-card" data-url="https://calendar.google.com">
-                    <span class="site-icon">📅</span>
-                    <div class="site-name">Google Calendar</div>
-                    <div class="site-desc">日历应用</div>
+                <div class="site-card tool-card" data-url="https://www.canva.com">
+                    <div class="site-icon"><i class="fas fa-palette"></i></div>
+                    <div class="site-name">Canva</div>
+                    <div class="site-desc">在线设计工具</div>
+                </div>
+                <div class="site-card tool-card" data-url="https://www.photopea.com">
+                    <div class="site-icon"><i class="fas fa-image"></i></div>
+                    <div class="site-name">Photopea</div>
+                    <div class="site-desc">在线PS工具</div>
+                </div>
+                <div class="site-card tool-card" data-url="https://www.remove.bg">
+                    <div class="site-icon"><i class="fas fa-cut"></i></div>
+                    <div class="site-name">Remove.bg</div>
+                    <div class="site-desc">背景去除工具</div>
+                </div>
+                <div class="site-card tool-card" data-url="https://www.grammarly.com">
+                    <div class="site-icon"><i class="fas fa-spell-check"></i></div>
+                    <div class="site-name">Grammarly</div>
+                    <div class="site-desc">语法检查工具</div>
+                </div>
+                <div class="site-card tool-card" data-url="https://www.tinywow.com">
+                    <div class="site-icon"><i class="fas fa-file-export"></i></div>
+                    <div class="site-name">TinyWow</div>
+                    <div class="site-desc">文件转换工具</div>
                 </div>
             </div>
         </div>
         
         <footer>
-            <p>© 2023 我的导航网站 | 设计简洁，使用便捷</p>
+            <p>© 2023 游戏导航网站增强版 | 探索游戏世界，发现更多乐趣</p>
         </footer>
+    </div>
+
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
     </div>
 
     <script>
@@ -259,16 +817,12 @@
             const query = searchInput.value.trim();
             
             if (query) {
-                // 检查是否是URL格式
                 if (query.includes('.') || query.startsWith('http')) {
-                    // 如果不是以http开头，添加https
                     const url = query.startsWith('http') ? query : 'https://' + query;
                     window.open(url, '_blank');
                 } else {
-                    // 否则使用Google搜索
-                    window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(query), '_blank');
                 }
-                
                 searchInput.value = '';
             }
         });
@@ -285,6 +839,48 @@
             card.addEventListener('click', function() {
                 const url = this.getAttribute('data-url');
                 window.open(url, '_blank');
+            });
+        });
+        
+        // 分类切换功能
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                document.querySelectorAll('.category').forEach(category => {
+                    category.classList.remove('active');
+                });
+                
+                const categoryId = this.getAttribute('data-category') + '-category';
+                document.getElementById(categoryId).classList.add('active');
+            });
+        });
+
+        // 暗黑模式切换
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // 快速链接点击效果
+        document.querySelectorAll('.quick-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
             });
         });
     </script>

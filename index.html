@@ -21,6 +21,8 @@
             --wiki-color: #3f37c9;
             --tool-color: #4cc9f0;
             --domestic-color: #f8961e;
+            --scrollbar-thumb: #ced4da;
+            --scrollbar-track: #e9ecef;
         }
 
         * {
@@ -36,6 +38,24 @@
             min-height: 100vh;
             padding: 2rem 1rem;
             line-height: 1.6;
+            transition: background 0.3s ease;
+            scroll-behavior: smooth;
+        }
+
+        /* 滚动条优化 */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+        body::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
         }
 
         .container {
@@ -78,7 +98,7 @@
             border-radius: 2.5rem;
             font-size: 1.05rem;
             box-shadow: var(--shadow);
-            transition: all 0.3 cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             background: var(--white);
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -99,7 +119,7 @@
             padding: 0.85rem 1.75rem;
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.3;
+            transition: all 0.3s ease;
             font-weight: 500;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
@@ -124,7 +144,7 @@
             background: var(--white);
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.3;
+            transition: all 0.3s ease;
             font-size: 0.95rem;
             font-weight: 500;
             color: var(--gray);
@@ -163,7 +183,7 @@
         .category {
             margin-bottom: 3rem;
             display: none;
-            animation: fadeIn 0.5 ease;
+            animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
@@ -200,7 +220,7 @@
             padding: 1.75rem;
             text-align: center;
             box-shadow: var(--shadow);
-            transition: all 0.3 cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -216,7 +236,7 @@
             width: 4px;
             height: 100%;
             background: var(--primary);
-            transition: all 0.3;
+            transition: all 0.3s ease;
         }
 
         .site-card:hover {
@@ -242,7 +262,7 @@
             border-radius: 50%;
             background: rgba(67, 97, 238, 0.1);
             margin: 0 auto 1.25rem;
-            transition: all 0.3;
+            transition: all 0.3s ease;
         }
 
         .site-card:hover .site-icon {
@@ -346,7 +366,7 @@
             background: var(--white);
             border-radius: 2rem;
             cursor: pointer;
-            transition: all 0.3;
+            transition: all 0.3s ease;
             font-size: 0.95rem;
             font-weight: 500;
             color: var(--dark);
@@ -378,11 +398,39 @@
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             z-index: 100;
-            transition: all 0.3;
+            transition: all 0.3s ease;
         }
 
         .theme-toggle:hover {
             transform: scale(1.1);
+        }
+
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 8rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--secondary);
         }
 
         footer {
@@ -404,6 +452,8 @@
             --card-bg: rgba(30, 30, 30, 0.9);
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.4);
+            --scrollbar-thumb: #495057;
+            --scrollbar-track: #212529;
             background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
         }
 
@@ -432,6 +482,16 @@
             .site-card {
                 padding: 1.5rem;
             }
+
+            .back-to-top, .theme-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+            .back-to-top {
+                bottom: 7rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -456,13 +516,6 @@
             .search-btn {
                 padding: 0.7rem 1.5rem;
             }
-
-            .theme-toggle {
-                width: 45px;
-                height: 45px;
-                bottom: 1.5rem;
-                right: 1.5rem;
-            }
         }
     </style>
 </head>
@@ -486,6 +539,12 @@
             <div class="quick-link" onclick="window.open('https://www.bilibili.com/v/game', '_blank')">
                 <i class="fas fa-play-circle"></i> 哔哩游戏
             </div>
+            <div class="quick-link" onclick="window.open('https://www.isthereanydeal.com', '_blank')">
+                <i class="fas fa-tags"></i> 游戏折扣
+            </div>
+            <div class="quick-link" onclick="window.open('https://steamdb.info', '_blank')">
+                <i class="fas fa-database"></i> SteamDB
+            </div>
         </div>
         
         <div class="search-container">
@@ -501,303 +560,36 @@
             <div class="tab" data-category="tools">实用工具</div>
         </div>
         
-        <div class="category active" id="wikipedia-category">
-            <h2 class="category-title"><i class="fab fa-wikipedia-w"></i> 维基百科</h2>
-            <div class="sites-grid">
-                <div class="site-card wiki-card" data-url="https://zh.wikipedia.org">
-                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
-                    <div class="site-name">中文维基</div>
-                    <div class="site-desc">自由的百科全书</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://en.wikipedia.org">
-                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
-                    <div class="site-name">英文维基</div>
-                    <div class="site-desc">The Free Encyclopedia</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.m.wikipedia.org">
-                    <div class="site-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="site-name">移动版</div>
-                    <div class="site-desc">手机优化版本</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wiktionary.org">
-                    <div class="site-icon"><i class="fas fa-book-open"></i></div>
-                    <div class="site-name">维基词典</div>
-                    <div class="site-desc">多语言词典</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikibooks.org">
-                    <div class="site-icon"><i class="fas fa-book"></i></div>
-                    <div class="site-name">维基教科书</div>
-                    <div class="site-desc">自由教学读本</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikinews.org">
-                    <div class="site-icon"><i class="fas fa-newspaper"></i></div>
-                    <div class="site-name">维基新闻</div>
-                    <div class="site-desc">自由内容新闻</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikisource.org">
-                    <div class="site-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="site-name">维基文库</div>
-                    <div class="site-desc">自由图书馆</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikiversity.org">
-                    <div class="site-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="site-name">维基学院</div>
-                    <div class="site-desc">自由学习资源</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikivoyage.org">
-                    <div class="site-icon"><i class="fas fa-map-marked-alt"></i></div>
-                    <div class="site-name">维基导游</div>
-                    <div class="site-desc">自由旅行指南</div>
-                </div>
-                <div class="site-card wiki-card" data-url="https://zh.wikiquote.org">
-                    <div class="site-icon"><i class="fas fa-quote-right"></i></div>
-                    <div class="site-name">维基语录</div>
-                    <div class="site-desc">名人名言集</div>
-                </div>
+        <!-- 动态渲染的分类容器 -->
+        <div id="categories-container">
+            <!-- 维基百科分类 -->
+            <div class="category active" id="wikipedia-category">
+                <h2 class="category-title"><i class="fab fa-wikipedia-w"></i> 维基百科</h2>
+                <div class="sites-grid" id="wikipedia-grid"></div>
             </div>
-        </div>
-        
-        <div class="category" id="games-category">
-            <h2 class="category-title"><i class="fas fa-gamepad"></i> 游戏平台</h2>
-            <div class="sites-grid">
-                <div class="site-card game-card" data-url="https://store.steampowered.com">
-                    <div class="site-icon"><i class="fab fa-steam"></i></div>
-                    <div class="site-name">Steam</div>
-                    <div class="site-desc">数字游戏发行平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.epicgames.com/store">
-                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
-                    <div class="site-name">Epic Games</div>
-                    <div class="site-desc">游戏商店与引擎</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.origin.com">
-                    <div class="site-icon"><i class="fas fa-dice"></i></div>
-                    <div class="site-name">Origin</div>
-                    <div class="site-desc">EA游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.gog.com">
-                    <div class="site-icon"><i class="fas fa-ghost"></i></div>
-                    <div class="site-name">GOG</div>
-                    <div class="site-desc">无DRM游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.xbox.com">
-                    <div class="site-icon"><i class="fab fa-xbox"></i></div>
-                    <div class="site-name">Xbox</div>
-                    <div class="site-desc">微软游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.playstation.com">
-                    <div class="site-icon"><i class="fab fa-playstation"></i></div>
-                    <div class="site-name">PlayStation</div>
-                    <div class="site-desc">索尼游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.nintendo.com">
-                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
-                    <div class="site-name">Nintendo</div>
-                    <div class="site-desc">任天堂游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.blizzard.com">
-                    <div class="site-icon"><i class="fab fa-battle-net"></i></div>
-                    <div class="site-name">Battle.net</div>
-                    <div class="site-desc">暴雪游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.ubisoft.com">
-                    <div class="site-icon"><i class="fas fa-crown"></i></div>
-                    <div class="site-name">Ubisoft</div>
-                    <div class="site-desc">育碧游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.rockstargames.com">
-                    <div class="site-icon"><i class="fas fa-star"></i></div>
-                    <div class="site-name">Rockstar</div>
-                    <div class="site-desc">R星游戏平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.twitch.tv">
-                    <div class="site-icon"><i class="fab fa-twitch"></i></div>
-                    <div class="site-name">Twitch</div>
-                    <div class="site-desc">游戏直播平台</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.discord.com">
-                    <div class="site-icon"><i class="fab fa-discord"></i></div>
-                    <div class="site-name">Discord</div>
-                    <div class="site-desc">游戏社区平台</div>
-                </div>
+            
+            <!-- 游戏平台分类 -->
+            <div class="category" id="games-category">
+                <h2 class="category-title"><i class="fas fa-gamepad"></i> 游戏平台</h2>
+                <div class="sites-grid" id="games-grid"></div>
             </div>
-        </div>
-        
-        <div class="category" id="game-wiki-category">
-            <h2 class="category-title"><i class="fas fa-dragon"></i> 游戏维基</h2>
-            <div class="sites-grid">
-                <div class="site-card game-card" data-url="https://www.wowhead.com">
-                    <div class="site-icon"><i class="fas fa-dragon"></i></div>
-                    <div class="site-name">Wowhead</div>
-                    <div class="site-desc">魔兽世界数据库</div>
-                </div>
-                <div class="site-card game-card" data-url="https://leagueoflegends.fandom.com">
-                    <div class="site-icon"><i class="fab fa-wikipedia-w"></i></div>
-                    <div class="site-name">LOL Wiki</div>
-                    <div class="site-desc">英雄联盟维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://minecraft.fandom.com">
-                    <div class="site-icon"><i class="fas fa-cube"></i></div>
-                    <div class="site-name">Minecraft Wiki</div>
-                    <div class="site-desc">我的世界维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://genshin-impact.fandom.com">
-                    <div class="site-icon"><i class="fas fa-wind"></i></div>
-                    <div class="site-name">原神Wiki</div>
-                    <div class="site-desc">Genshin Impact</div>
-                </div>
-                <div class="site-card game-card" data-url="https://eldenring.wiki.fextralife.com">
-                    <div class="site-icon"><i class="fas fa-skull"></i></div>
-                    <div class="site-name">Elden Ring Wiki</div>
-                    <div class="site-desc">艾尔登法环维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.pokewiki.de">
-                    <div class="site-icon"><i class="fas fa-bolt"></i></div>
-                    <div class="site-name">PokéWiki</div>
-                    <div class="site-desc">宝可梦维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://zelda.fandom.com">
-                    <div class="site-icon"><i class="fas fa-sword"></i></div>
-                    <div class="site-name">Zelda Wiki</div>
-                    <div class="site-desc">塞尔达传说维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.falloutwiki.com">
-                    <div class="site-icon"><i class="fas fa-radiation"></i></div>
-                    <div class="site-name">Fallout Wiki</div>
-                    <div class="site-desc">辐射维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://dota2.fandom.com">
-                    <div class="site-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="site-name">Dota 2 Wiki</div>
-                    <div class="site-desc">Dota 2维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://terraria.fandom.com">
-                    <div class="site-icon"><i class="fas fa-mountain"></i></div>
-                    <div class="site-name">Terraria Wiki</div>
-                    <div class="site-desc">泰拉瑞亚维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://stardewvalleywiki.com">
-                    <div class="site-icon"><i class="fas fa-leaf"></i></div>
-                    <div class="site-name">Stardew Wiki</div>
-                    <div class="site-desc">星露谷物语维基</div>
-                </div>
-                <div class="site-card game-card" data-url="https://www.wowpedia.org">
-                    <div class="site-icon"><i class="fas fa-book"></i></div>
-                    <div class="site-name">Wowpedia</div>
-                    <div class="site-desc">魔兽世界维基</div>
-                </div>
+            
+            <!-- 游戏维基分类 -->
+            <div class="category" id="game-wiki-category">
+                <h2 class="category-title"><i class="fas fa-dragon"></i> 游戏维基</h2>
+                <div class="sites-grid" id="game-wiki-grid"></div>
             </div>
-        </div>
-        
-        <div class="category" id="domestic-category">
-            <h2 class="category-title"><i class="fas fa-home"></i> 国内资源</h2>
-            <div class="sites-grid">
-                <div class="site-card domestic-card" data-url="https://www.baidu.com">
-                    <div class="site-icon"><i class="fas fa-search"></i></div>
-                    <div class="site-name">百度</div>
-                    <div class="site-desc">中文搜索引擎</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.zhihu.com">
-                    <div class="site-icon"><i class="fas fa-question"></i></div>
-                    <div class="site-name">知乎</div>
-                    <div class="site-desc">问答社区</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.bilibili.com">
-                    <div class="site-icon"><i class="fas fa-play-circle"></i></div>
-                    <div class="site-name">哔哩哔哩</div>
-                    <div class="site-desc">视频分享平台</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.weibo.com">
-                    <div class="site-icon"><i class="fab fa-weibo"></i></div>
-                    <div class="site-name">微博</div>
-                    <div class="site-desc">社交媒体</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.3dmgame.com">
-                    <div class="site-icon"><i class="fas fa-gamepad"></i></div>
-                    <div class="site-name">3DM游戏网</div>
-                    <div class="site-desc">游戏资讯门户</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.gamersky.com">
-                    <div class="site-icon"><i class="fas fa-headset"></i></div>
-                    <div class="site-name">游民星空</div>
-                    <div class="site-desc">游戏资讯网站</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.17173.com">
-                    <div class="site-icon"><i class="fas fa-trophy"></i></div>
-                    <div class="site-name">17173游戏网</div>
-                    <div class="site-desc">游戏资讯门户</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.ali213.net">
-                    <div class="site-icon"><i class="fas fa-dragon"></i></div>
-                    <div class="site-name">游侠网</div>
-                    <div class="site-desc">游戏资讯门户</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.taptap.com">
-                    <div class="site-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="site-name">TapTap</div>
-                    <div class="site-desc">手游社区</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.nga.cn">
-                    <div class="site-icon"><i class="fas fa-comments"></i></div>
-                    <div class="site-name">NGA玩家社区</div>
-                    <div class="site-desc">游戏论坛</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.vgtime.com">
-                    <div class="site-icon"><i class="fas fa-clock"></i></div>
-                    <div class="site-name">游戏时光</div>
-                    <div class="site-desc">游戏资讯网站</div>
-                </div>
-                <div class="site-card domestic-card" data-url="https://www.a9vg.com">
-                    <div class="site-icon"><i class="fas fa-tv"></i></div>
-                    <div class="site-name">A9VG电玩部落</div>
-                    <div class="site-desc">主机游戏社区</div>
-                </div>
+            
+            <!-- 国内资源分类 -->
+            <div class="category" id="domestic-category">
+                <h2 class="category-title"><i class="fas fa-home"></i> 国内资源</h2>
+                <div class="sites-grid" id="domestic-grid"></div>
             </div>
-        </div>
-        
-        <div class="category" id="tools-category">
-            <h2 class="category-title"><i class="fas fa-tools"></i> 实用工具</h2>
-            <div class="sites-grid">
-                <div class="site-card tool-card" data-url="https://translate.google.com">
-                    <div class="site-icon"><i class="fas fa-language"></i></div>
-                    <div class="site-name">Google翻译</div>
-                    <div class="site-desc">在线翻译工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.notion.so">
-                    <div class="site-icon"><i class="fas fa-sticky-note"></i></div>
-                    <div class="site-name">Notion</div>
-                    <div class="site-desc">笔记与协作工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.figma.com">
-                    <div class="site-icon"><i class="fab fa-figma"></i></div>
-                    <div class="site-name">Figma</div>
-                    <div class="site-desc">设计协作工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.canva.com">
-                    <div class="site-icon"><i class="fas fa-palette"></i></div>
-                    <div class="site-name">Canva</div>
-                    <div class="site-desc">在线设计工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.photopea.com">
-                    <div class="site-icon"><i class="fas fa-image"></i></div>
-                    <div class="site-name">Photopea</div>
-                    <div class="site-desc">在线PS工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.remove.bg">
-                    <div class="site-icon"><i class="fas fa-cut"></i></div>
-                    <div class="site-name">Remove.bg</div>
-                    <div class="site-desc">背景去除工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.grammarly.com">
-                    <div class="site-icon"><i class="fas fa-spell-check"></i></div>
-                    <div class="site-name">Grammarly</div>
-                    <div class="site-desc">语法检查工具</div>
-                </div>
-                <div class="site-card tool-card" data-url="https://www.tinywow.com">
-                    <div class="site-icon"><i class="fas fa-file-export"></i></div>
-                    <div class="site-name">TinyWow</div>
-                    <div class="site-desc">文件转换工具</div>
-                </div>
+            
+            <!-- 实用工具分类 -->
+            <div class="category" id="tools-category">
+                <h2 class="category-title"><i class="fas fa-tools"></i> 实用工具</h2>
+                <div class="sites-grid" id="tools-grid"></div>
             </div>
         </div>
         
@@ -810,81 +602,295 @@
         <i class="fas fa-moon"></i>
     </div>
 
+    <div class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
     <script>
-        // 搜索功能
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const searchInput = document.getElementById('search-input');
-            const query = searchInput.value.trim();
-            
-            if (query) {
-                if (query.includes('.') || query.startsWith('http')) {
-                    const url = query.startsWith('http') ? query : 'https://' + query;
+        // ========== 网站数据配置（可在此处扩展/修改网站） ==========
+        const siteData = {
+            // 维基百科分类
+            wikipedia: [
+                { name: "中文维基", desc: "自由的百科全书", icon: "fab fa-wikipedia-w", url: "https://zh.wikipedia.org", class: "wiki-card" },
+                { name: "英文维基", desc: "The Free Encyclopedia", icon: "fab fa-wikipedia-w", url: "https://en.wikipedia.org", class: "wiki-card" },
+                { name: "移动版维基", desc: "手机优化版本", icon: "fas fa-mobile-alt", url: "https://zh.m.wikipedia.org", class: "wiki-card" },
+                { name: "维基词典", desc: "多语言词典", icon: "fas fa-book-open", url: "https://zh.wiktionary.org", class: "wiki-card" },
+                { name: "维基教科书", desc: "自由教学读本", icon: "fas fa-book", url: "https://zh.wikibooks.org", class: "wiki-card" },
+                { name: "维基新闻", desc: "自由内容新闻", icon: "fas fa-newspaper", url: "https://zh.wikinews.org", class: "wiki-card" },
+                { name: "维基文库", desc: "自由图书馆", icon: "fas fa-file-alt", url: "https://zh.wikisource.org", class: "wiki-card" },
+                { name: "维基学院", desc: "自由学习资源", icon: "fas fa-graduation-cap", url: "https://zh.wikiversity.org", class: "wiki-card" },
+                { name: "维基导游", desc: "自由旅行指南", icon: "fas fa-map-marked-alt", url: "https://zh.wikivoyage.org", class: "wiki-card" },
+                { name: "维基语录", desc: "名人名言集", icon: "fas fa-quote-right", url: "https://zh.wikiquote.org", class: "wiki-card" },
+                { name: "维基共享资源", desc: "自由多媒体库", icon: "fas fa-images", url: "https://commons.wikimedia.org", class: "wiki-card" },
+                { name: "维基物种", desc: "自由生物百科", icon: "fas fa-leaf", url: "https://species.wikimedia.org", class: "wiki-card" },
+                { name: "MediaWiki", desc: "维基建站系统", icon: "fas fa-code", url: "https://www.mediawiki.org", class: "wiki-card" },
+                { name: "维基数据", desc: "结构化数据仓库", icon: "fas fa-database", url: "https://www.wikidata.org", class: "wiki-card" }
+            ],
+
+            // 游戏平台分类
+            games: [
+                { name: "Steam", desc: "数字游戏发行平台", icon: "fab fa-steam", url: "https://store.steampowered.com", class: "game-card" },
+                { name: "Epic Games", desc: "游戏商店与引擎", icon: "fas fa-gamepad", url: "https://www.epicgames.com/store", class: "game-card" },
+                { name: "EA App", desc: "EA游戏平台(替代Origin)", icon: "fas fa-dice", url: "https://www.ea.com/ea-app", class: "game-card" },
+                { name: "GOG", desc: "无DRM游戏平台", icon: "fas fa-ghost", url: "https://www.gog.com", class: "game-card" },
+                { name: "Xbox", desc: "微软游戏平台", icon: "fab fa-xbox", url: "https://www.xbox.com", class: "game-card" },
+                { name: "PlayStation", desc: "索尼游戏平台", icon: "fab fa-playstation", url: "https://www.playstation.com", class: "game-card" },
+                { name: "Nintendo", desc: "任天堂游戏平台", icon: "fas fa-gamepad", url: "https://www.nintendo.com", class: "game-card" },
+                { name: "Battle.net", desc: "暴雪游戏平台", icon: "fab fa-battle-net", url: "https://www.blizzard.com", class: "game-card" },
+                { name: "Ubisoft Connect", desc: "育碧游戏平台", icon: "fas fa-crown", url: "https://www.ubisoft.com", class: "game-card" },
+                { name: "Rockstar", desc: "R星游戏平台", icon: "fas fa-star", url: "https://www.rockstargames.com", class: "game-card" },
+                { name: "Twitch", desc: "游戏直播平台", icon: "fab fa-twitch", url: "https://www.twitch.tv", class: "game-card" },
+                { name: "Discord", desc: "游戏社区平台", icon: "fab fa-discord", url: "https://www.discord.com", class: "game-card" },
+                { name: "itch.io", desc: "独立游戏平台", icon: "fas fa-puzzle-piece", url: "https://itch.io", class: "game-card" },
+                { name: "Steam社区", desc: "Steam玩家社区", icon: "fab fa-steam-square", url: "https://steamcommunity.com", class: "game-card" },
+                { name: "WeGame", desc: "腾讯游戏平台", icon: "fas fa-fire", url: "https://wegame.qq.com", class: "game-card" },
+                { name: "战网国服", desc: "暴雪战网中国版", icon: "fab fa-battle-net", url: "https://www.battlenet.com.cn", class: "game-card" },
+                { name: "Nintendo eShop", desc: "任天堂数字商店", icon: "fas fa-shopping-cart", url: "https://www.nintendo.com/games/buy-now/", class: "game-card" },
+                { name: "Xbox Game Pass", desc: "XGP游戏订阅", icon: "fab fa-xbox", url: "https://www.xbox.com/xbox-game-pass", class: "game-card" },
+                { name: "PlayStation Plus", desc: "PS会员服务", icon: "fab fa-playstation", url: "https://www.playstation.com/ps-plus/", class: "game-card" },
+                { name: "SteamDB", desc: "Steam数据查询", icon: "fas fa-database", url: "https://steamdb.info", class: "game-card" },
+                { name: "IsThereAnyDeal", desc: "游戏折扣追踪", icon: "fas fa-tags", url: "https://www.isthereanydeal.com", class: "game-card" },
+                { name: "TapTap国际版", desc: "海外手游社区", icon: "fas fa-mobile-alt", url: "https://www.taptap.io", class: "game-card" },
+                { name: "Square Enix", desc: "史克威尔艾尼克斯", icon: "fas fa-square", url: "https://www.square-enix.com", class: "game-card" },
+                { name: "Bandai Namco", desc: "万代南梦宫", icon: "fas fa-dragon", url: "https://www.bandainamcoent.com", class: "game-card" }
+            ],
+
+            // 游戏维基分类
+            game-wiki: [
+                { name: "Wowhead", desc: "魔兽世界数据库", icon: "fas fa-dragon", url: "https://www.wowhead.com", class: "game-card" },
+                { name: "LOL Wiki", desc: "英雄联盟维基", icon: "fab fa-wikipedia-w", url: "https://leagueoflegends.fandom.com", class: "game-card" },
+                { name: "Minecraft Wiki", desc: "我的世界维基", icon: "fas fa-cube", url: "https://minecraft.fandom.com", class: "game-card" },
+                { name: "原神Wiki", desc: "Genshin Impact", icon: "fas fa-wind", url: "https://genshin-impact.fandom.com", class: "game-card" },
+                { name: "Elden Ring Wiki", desc: "艾尔登法环维基", icon: "fas fa-skull", url: "https://eldenring.wiki.fextralife.com", class: "game-card" },
+                { name: "PokéWiki", desc: "宝可梦维基", icon: "fas fa-bolt", url: "https://www.pokewiki.de", class: "game-card" },
+                { name: "Zelda Wiki", desc: "塞尔达传说维基", icon: "fas fa-sword", url: "https://zelda.fandom.com", class: "game-card" },
+                { name: "Fallout Wiki", desc: "辐射维基", icon: "fas fa-radiation", url: "https://www.falloutwiki.com", class: "game-card" },
+                { name: "Dota 2 Wiki", desc: "Dota 2维基", icon: "fas fa-shield-alt", url: "https://dota2.fandom.com", class: "game-card" },
+                { name: "Terraria Wiki", desc: "泰拉瑞亚维基", icon: "fas fa-mountain", url: "https://terraria.fandom.com", class: "game-card" },
+                { name: "Stardew Wiki", desc: "星露谷物语维基", icon: "fas fa-leaf", url: "https://stardewvalleywiki.com", class: "game-card" },
+                { name: "Wowpedia", desc: "魔兽世界维基", icon: "fas fa-book", url: "https://www.wowpedia.org", class: "game-card" },
+                { name: "赛博朋克2077 Wiki", desc: "Cyberpunk 2077维基", icon: "fas fa-robot", url: "https://cyberpunk.fandom.com", class: "game-card" },
+                { name: "巫师3 Wiki", desc: "The Witcher 3维基", icon: "fas fa-wand-magic-sparkles", url: "https://witcher.fandom.com", class: "game-card" },
+                { name: "最终幻想Wiki", desc: "Final Fantasy维基", icon: "fas fa-star", url: "https://finalfantasy.fandom.com", class: "game-card" },
+                { name: "怪物猎人Wiki", desc: "Monster Hunter维基", icon: "fas fa-dragon", url: "https://monsterhunter.fandom.com", class: "game-card" },
+                { name: "崩坏：星穹铁道Wiki", desc: "星穹铁道维基", icon: "fas fa-star-of-life", url: "https://honkai-star-rail.fandom.com", class: "game-card" },
+                { name: "明日方舟Wiki", desc: "Arknights维基", icon: "fas fa-shield-virus", url: "https://arknights.fandom.com", class: "game-card" },
+                { name: "APEX英雄Wiki", desc: "Apex Legends维基", icon: "fas fa-crosshairs", url: "https://apexlegends.fandom.com", class: "game-card" },
+                { name: "CS2 Wiki", desc: "反恐精英2维基", icon: "fas fa-gun", url: "https://counterstrike.fandom.com", class: "game-card" },
+                { name: "Valorant Wiki", desc: "无畏契约维基", icon: "fas fa-bolt-lightning", url: "https://valorant.fandom.com", class: "game-card" },
+                { name: "守望先锋Wiki", desc: "Overwatch维基", icon: "fas fa-eye", url: "https://overwatch.fandom.com", class: "game-card" },
+                { name: "暗黑破坏神4 Wiki", desc: "Diablo IV维基", icon: "fas fa-hammer", url: "https://diablo4.wiki.fextralife.com", class: "game-card" },
+                { name: "星空Wiki", desc: "Starfield维基", icon: "fas fa-star", url: "https://starfield.fandom.com", class: "game-card" },
+                { name: "博德之门3 Wiki", desc: "Baldur's Gate 3维基", icon: "fas fa-dungeon", url: "https://baldursgate3.wiki.fextralife.com", class: "game-card" }
+            ],
+
+            // 国内资源分类
+            domestic: [
+                { name: "百度", desc: "中文搜索引擎", icon: "fas fa-search", url: "https://www.baidu.com", class: "domestic-card" },
+                { name: "知乎", desc: "问答社区", icon: "fas fa-question", url: "https://www.zhihu.com", class: "domestic-card" },
+                { name: "哔哩哔哩", desc: "视频分享平台", icon: "fas fa-play-circle", url: "https://www.bilibili.com", class: "domestic-card" },
+                { name: "微博", desc: "社交媒体", icon: "fab fa-weibo", url: "https://www.weibo.com", class: "domestic-card" },
+                { name: "3DM游戏网", desc: "游戏资讯门户", icon: "fas fa-gamepad", url: "https://www.3dmgame.com", class: "domestic-card" },
+                { name: "游民星空", desc: "游戏资讯网站", icon: "fas fa-headset", url: "https://www.gamersky.com", class: "domestic-card" },
+                { name: "17173游戏网", desc: "游戏资讯门户", icon: "fas fa-trophy", url: "https://www.17173.com", class: "domestic-card" },
+                { name: "游侠网", desc: "游戏资讯门户", icon: "fas fa-dragon", url: "https://www.ali213.net", class: "domestic-card" },
+                { name: "TapTap", desc: "手游社区", icon: "fas fa-mobile-alt", url: "https://www.taptap.com", class: "domestic-card" },
+                { name: "NGA玩家社区", desc: "游戏论坛", icon: "fas fa-comments", url: "https://www.nga.cn", class: "domestic-card" },
+                { name: "游戏时光", desc: "游戏资讯网站", icon: "fas fa-clock", url: "https://www.vgtime.com", class: "domestic-card" },
+                { name: "A9VG电玩部落", desc: "主机游戏社区", icon: "fas fa-tv", url: "https://www.a9vg.com", class: "domestic-card" },
+                { name: "游研社", desc: "游戏文化媒体", icon: "fas fa-book-open-reader", url: "https://www.yysa.com", class: "domestic-card" },
+                { name: "机核网", desc: "游戏文化社区", icon: "fas fa-microchip", url: "https://www.gcores.com", class: "domestic-card" },
+                { name: "虎牙直播", desc: "游戏直播平台", icon: "fas fa-video", url: "https://www.huya.com", class: "domestic-card" },
+                { name: "斗鱼直播", desc: "游戏直播平台", icon: "fas fa-tower-broadcast", url: "https://www.douyu.com", class: "domestic-card" },
+                { name: "快手游戏", desc: "短视频游戏社区", icon: "fab fa-kickstarter-k", url: "https://game.kuaishou.com", class: "domestic-card" },
+                { name: "抖音游戏", desc: "短视频游戏平台", icon: "fab fa-tiktok", url: "https://www.douyin.com/game", class: "domestic-card" },
+                { name: "小黑盒", desc: "Steam游戏社区", icon: "fas fa-box", url: "https://www.xiaoheihe.cn", class: "domestic-card" },
+                { name: "杉果游戏", desc: "游戏数字商店", icon: "fas fa-apple-alt", url: "https://www.sonkwo.com", class: "domestic-card" },
+                { name: "凤凰游戏", desc: "正版游戏商城", icon: "fas fa-phoenix-alt", url: "https://www.fhyx.com", class: "domestic-card" },
+                { name: "方块游戏", desc: "国产游戏平台", icon: "fas fa-cube", url: "https://www.cubejoy.com", class: "domestic-card" },
+                { name: "网易游戏", desc: "游戏开发运营", icon: "fas fa-netlify", url: "https://game.163.com", class: "domestic-card" },
+                { name: "腾讯游戏", desc: "游戏开发运营", icon: "fab fa-tencent-qq", url: "https://game.qq.com", class: "domestic-card" },
+                { name: "米哈游官网", desc: "原神/星穹铁道开发商", icon: "fas fa-star", url: "https://www.mihoyo.com", class: "domestic-card" },
+                { name: "心动网络", desc: "游戏发行运营", icon: "fas fa-heart", url: "https://www.xd.com", class: "domestic-card" },
+                { name: "叠纸游戏", desc: "女性向游戏开发商", icon: "fas fa-layer-group", url: "https://www.papegames.com", class: "domestic-card" },
+                { name: "恺英网络", desc: "游戏研发运营", icon: "fas fa-gamepad", url: "https://www.kaying.com", class: "domestic-card" },
+                { name: "4399游戏盒", desc: "小游戏平台", icon: "fas fa-gamepad", url: "https://box.4399.com", class: "domestic-card" },
+                { name: "游民商城", desc: "正版游戏购买", icon: "fas fa-shopping-bag", url: "https://mall.gamersky.com", class: "domestic-card" }
+            ],
+
+            // 实用工具分类
+            tools: [
+                { name: "Google翻译", desc: "在线翻译工具", icon: "fas fa-language", url: "https://translate.google.com", class: "tool-card" },
+                { name: "Notion", desc: "笔记与协作工具", icon: "fas fa-sticky-note", url: "https://www.notion.so", class: "tool-card" },
+                { name: "Figma", desc: "设计协作工具", icon: "fab fa-figma", url: "https://www.figma.com", class: "tool-card" },
+                { name: "Canva", desc: "在线设计工具", icon: "fas fa-palette", url: "https://www.canva.com", class: "tool-card" },
+                { name: "Photopea", desc: "在线PS工具", icon: "fas fa-image", url: "https://www.photopea.com", class: "tool-card" },
+                { name: "Remove.bg", desc: "背景去除工具", icon: "fas fa-cut", url: "https://www.remove.bg", class: "tool-card" },
+                { name: "Grammarly", desc: "语法检查工具", icon: "fas fa-spell-check", url: "https://www.grammarly.com", class: "tool-card" },
+                { name: "TinyWow", desc: "文件转换工具", icon: "fas fa-file-export", url: "https://www.tinywow.com", class: "tool-card" },
+                { name: "DeepL翻译", desc: "精准翻译工具", icon: "fas fa-language", url: "https://www.deepl.com", class: "tool-card" },
+                { name: "有道翻译", desc: "中文翻译工具", icon: "fas fa-book", url: "https://fanyi.youdao.com", class: "tool-card" },
+                { name: "美图秀秀在线版", desc: "图片编辑工具", icon: "fas fa-paint-brush", url: "https://pc.meitu.com", class: "tool-card" },
+                { name: "剪映在线版", desc: "视频剪辑工具", icon: "fas fa-scissors", url: "https://www.capcut.cn", class: "tool-card" },
+                { name: "草料二维码", desc: "二维码生成工具", icon: "fas fa-qrcode", url: "https://cli.im", class: "tool-card" },
+                { name: "ProcessOn", desc: "在线思维导图", icon: "fas fa-project-diagram", url: "https://www.processon.com", class: "tool-card" },
+                { name: "CodePen", desc: "前端代码编辑器", icon: "fab fa-codepen", url: "https://codepen.io", class: "tool-card" },
+                { name: "JSFiddle", desc: "JS代码测试工具", icon: "fas fa-code", url: "https://jsfiddle.net", class: "tool-card" },
+                { name: "印象笔记", desc: "云笔记工具", icon: "fas fa-sticky-note", url: "https://www.yinxiang.com", class: "tool-card" },
+                { name: "有道云笔记", desc: "云笔记协作工具", icon: "fas fa-cloud", url: "https://note.youdao.com", class: "tool-card" },
+                { name: "在线OCR", desc: "图片文字识别", icon: "fas fa-file-alt", url: "https://www.ocr.cn", class: "tool-card" },
+                { name: "音频转换", desc: "格式工厂在线版", icon: "fas fa-music", url: "https://www.formatoz.com", class: "tool-card" },
+                { name: "单位换算", desc: "全能单位转换器", icon: "fas fa-ruler-combined", url: "https://www.unitconverters.net", class: "tool-card" },
+                { name: "时区转换", desc: "全球时区查询", icon: "fas fa-clock", url: "https://www.timeanddate.com", class: "tool-card" },
+                { name: "Steam++", desc: "Steam增强工具", icon: "fab fa-steam", url: "https://steampp.net", class: "tool-card" },
+                { name: "游戏帧数监测", desc: "MSI Afterburner指南", icon: "fas fa-chart-line", url: "https://www.msi.com/Landing/afterburner", class: "tool-card" },
+                { name: "在线压缩工具", desc: "文件图片压缩", icon: "fas fa-compress", url: "https://www.compress2go.com", class: "tool-card" },
+                { name: "表情包制作", desc: "在线表情包生成", icon: "fas fa-smile", url: "https://www.fabiaoqing.com", class: "tool-card" },
+                { name: "云盘搜索", desc: "资源搜索工具", icon: "fas fa-cloud-download-alt", url: "https://www.yunpan搜.com", class: "tool-card" },
+                { name: "截图工具", desc: "Snipaste在线版", icon: "fas fa-camera", url: "https://www.snipaste.com", class: "tool-card" },
+                { name: "录屏工具", desc: "OBS在线指南", icon: "fas fa-video", url: "https://obsproject.com", class: "tool-card" },
+                { name: "游戏优化工具", desc: "GeForce Experience", icon: "fab fa-nvidia", url: "https://www.nvidia.com/geforce/geforce-experience/", class: "tool-card" }
+            ]
+        };
+
+        // ========== 初始化渲染网站卡片 ==========
+        function renderSiteCards() {
+            // 遍历所有分类
+            Object.keys(siteData).forEach(category => {
+                const grid = document.getElementById(`${category}-grid`);
+                if (!grid) return;
+
+                // 生成卡片HTML
+                const cardsHTML = siteData[category].map(site => `
+                    <div class="site-card ${site.class}" data-url="${site.url}">
+                        <div class="site-icon"><i class="${site.icon}"></i></div>
+                        <div class="site-name">${site.name}</div>
+                        <div class="site-desc">${site.desc}</div>
+                    </div>
+                `).join('');
+
+                grid.innerHTML = cardsHTML;
+            });
+
+            // 绑定卡片点击事件
+            document.querySelectorAll('.site-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
                     window.open(url, '_blank');
+                });
+            });
+        }
+
+        // ========== 搜索功能 ==========
+        function initSearch() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchInput = document.getElementById('search-input');
+
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (!query) return;
+
+                // 识别网址或搜索关键词
+                let url;
+                if (query.includes('.') || query.startsWith('http')) {
+                    url = query.startsWith('http') ? query : `https://${query}`;
                 } else {
-                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(query), '_blank');
+                    url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`;
                 }
-                searchInput.value = '';
-            }
-        });
-        
-        // 回车键搜索
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('search-btn').click();
-            }
-        });
-        
-        // 网站卡片点击事件
-        document.querySelectorAll('.site-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const url = this.getAttribute('data-url');
+
                 window.open(url, '_blank');
+                searchInput.value = '';
             });
-        });
-        
-        // 分类切换功能
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                document.querySelectorAll('.category').forEach(category => {
-                    category.classList.remove('active');
-                });
-                
-                const categoryId = this.getAttribute('data-category') + '-category';
-                document.getElementById(categoryId).classList.add('active');
-            });
-        });
 
-        // 暗黑模式切换
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
+            // 回车键触发搜索
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') searchBtn.click();
+            });
+        }
+
+        // ========== 分类切换功能 ==========
+        function initTabSwitch() {
+            const tabs = document.querySelectorAll('.tab');
             
-            const icon = this.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        });
-
-        // 快速链接点击效果
-        document.querySelectorAll('.quick-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 200);
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除所有激活状态
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+                    
+                    // 激活当前标签和分类
+                    this.classList.add('active');
+                    const categoryId = `${this.getAttribute('data-category')}-category`;
+                    document.getElementById(categoryId).classList.add('active');
+                    
+                    // 滚动到分类顶部
+                    document.getElementById(categoryId).scrollIntoView({ behavior: 'smooth' });
+                });
             });
+        }
+
+        // ========== 暗黑模式 ==========
+        function initDarkMode() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const isDark = localStorage.getItem('darkMode') === 'true';
+
+            // 初始化主题
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // 切换主题
+            themeToggle.addEventListener('click', function() {
+                const isDarkNow = document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', isDarkNow);
+                
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-moon', !isDarkNow);
+                icon.classList.toggle('fa-sun', isDarkNow);
+            });
+        }
+
+        // ========== 回到顶部 ==========
+        function initBackToTop() {
+            const backToTop = document.getElementById('back-to-top');
+            
+            // 滚动监听
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            // 点击回到顶部
+            backToTop.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ========== 快速链接交互 ==========
+        function initQuickLinks() {
+            document.querySelectorAll('.quick-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        }
+
+        // ========== 初始化所有功能 ==========
+        window.addEventListener('DOMContentLoaded', function() {
+            renderSiteCards();
+            initSearch();
+            initTabSwitch();
+            initDarkMode();
+            initBackToTop();
+            initQuickLinks();
         });
     </script>
 </body>
 </html>
-
-
